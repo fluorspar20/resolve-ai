@@ -1,5 +1,9 @@
 import * as vscode from "vscode";
 import { getNonce } from "../utils/getNonce";
+import simpleGit, {SimpleGit} from 'simple-git';
+import * as fs from 'fs';
+import * as path from 'path';
+
 export class SidebarProvider implements vscode.WebviewViewProvider {
   _view?: vscode.WebviewView;
   _doc?: vscode.TextDocument;
@@ -33,6 +37,64 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
           }
           vscode.window.showErrorMessage(data.value);
           break;
+        }
+        case "fetchCode": {
+          console.log('message', data.options.sourceBranch, data.options.remoteUrl);
+          const {sourceBranch, remoteUrl} = data.options;
+          //   // repo urls are of form - https://github.com/<username>/<repo_name>.git
+          // const repoName = remoteUrl.split('/').slice(-1)[0].replace('.git','');
+          // const tempDir = 'C:/Amogh/Projects/test';
+          // const git: SimpleGit = simpleGit();
+
+          // try {
+            
+          //   await git.cwd(tempDir).clone(remoteUrl);
+          //     // Checkout the desired branch
+          //   await git.cwd(`${tempDir}/${repoName}`).checkout(sourceBranch);
+          //   console.log('Code for branch', sourceBranch, 'fetched successfully');
+          // } catch(err){
+          //   console.error('Error fetching code: ', err);
+          // }
+          
+          const workspaceFolder = vscode.workspace.workspaceFolders?.[0]; // Assuming there is only one workspace folder open
+
+          // if (workspaceFolder) {
+          //     // Get the Git extension
+          //     const gitExtension = vscode.extensions.getExtension('vscode.git');
+          //     if (gitExtension) {
+          //         const gitAPI = gitExtension.exports.getAPI(1);
+
+          //         // Get the repository for the active workspace folder
+          //         const repository = gitAPI.repositories.find((repo: { rootUri: { fsPath: string; }; }) => repo.rootUri?.fsPath === workspaceFolder.uri.fsPath);
+          //         if (repository) {
+          //             // Get the remote URLs associated with the repository
+          //             const remoteUrls = repository.state.remotes.map((remote: { fetchUrl: any; }) => remote.fetchUrl);
+          //             console.log(remoteUrls);
+          //         }
+          //     }
+          // }
+
+          if(workspaceFolder) {
+            const terminal = vscode.window.createTerminal();
+            terminal.sendText(`cd "${workspaceFolder.uri.fsPath}"`);
+            terminal.sendText(`git fetch origin ${sourceBranch}`);
+
+            console.log(`Branch '${sourceBranch}' fetched successfully`);
+
+            terminal.sendText(`git merge --no-commit ${sourceBranch}`);
+            // const conflictMarkers: string[] = [];
+            // terminal.onDidWriteData(data => {
+            //     // Parse the terminal output to find conflict markers
+            //     const matches = data.match(/<{7}([\s\S]*?)={7}([\s\S]*?)>{7}/g);
+            //     if (matches) {
+            //         conflictMarkers.push(...matches);
+            //     }
+            // });
+          }
+
+
+                
+
         }
       }
     });
@@ -77,6 +139,9 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 			</head>
       <body>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
+        <script nonce="${nonce}">
+          const ts_vscode = acquireVsCodeApi();
+        </script>
 			</body>
 			</html>`;
   }
