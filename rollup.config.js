@@ -11,9 +11,7 @@ import {fileURLToPath} from 'url';
 const production = !process.env.ROLLUP_WATCH;
 const __filename = fileURLToPath(import.meta.url);
 
-// 👇️ "/home/john/Desktop/javascript"
 const __dirname = path.dirname(__filename);
-console.log('directory-name 👉️', __dirname);
 
 
 export default fs
