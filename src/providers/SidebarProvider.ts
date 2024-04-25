@@ -2,6 +2,8 @@ import * as vscode from "vscode";
 import { getNonce } from "../utils/getNonce";
 import * as cp from 'child_process';
 import { readFile } from "fs";
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
 
 export class SidebarProvider implements vscode.WebviewViewProvider {
   _view?: vscode.WebviewView;
@@ -31,11 +33,11 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
             if(workspaceFolder) {
 
               
-              // const terminal = vscode.window.createTerminal();
-              // terminal.sendText(`cd "${workspaceFolder.uri.fsPath}"`);
-              // terminal.sendText(`git fetch ${remoteOrigin} ${sourceBranch}`);
+              const terminal = vscode.window.createTerminal();
+              terminal.sendText(`cd "${workspaceFolder.uri.fsPath}"`);
+              terminal.sendText(`git fetch ${remoteOrigin} ${sourceBranch}`);
               
-              // @todo - fetch this branch using the remote url
+              //@todo - fetch this branch using the remote url
               await this.executeGitCommand(`cd "${workspaceFolder.uri.fsPath}"`, workspaceFolder);
 
               await this.executeGitCommand(`git fetch ${remoteOrigin} ${sourceBranch}`, workspaceFolder);
@@ -64,6 +66,20 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
               }
 
               console.log(conflictedParts);
+
+              //Send conflicted parts to Gemini 
+              
+              //INITIAL SET-UP
+              //EXPORT API COMMAND NEEDS TO BE RUN
+              //set API_KEY=<YOUR_API_KEY>
+              //Need to add this to set-up/installation flow @Amogh
+
+              const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+              const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+              const prompt = "Hi Gemini, say something about yourself in 2-3 lines.";
+             
+              const result = await model.generateContent(prompt);
+              console.log(result);
 
             }
           } catch (err) {

@@ -72,6 +72,8 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.7.1",
+    "express": "^4.19.2",
     "simple-git": "^3.24.0"
   }
 }
