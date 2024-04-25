@@ -33,9 +33,9 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
             if(workspaceFolder) {
 
               
-              const terminal = vscode.window.createTerminal();
-              terminal.sendText(`cd "${workspaceFolder.uri.fsPath}"`);
-              terminal.sendText(`git fetch ${remoteOrigin} ${sourceBranch}`);
+              //const terminal = vscode.window.createTerminal();
+              //terminal.sendText(`cd "${workspaceFolder.uri.fsPath}"`);
+              //terminal.sendText(`git fetch ${remoteOrigin} ${sourceBranch}`);
               
               //@todo - fetch this branch using the remote url
               await this.executeGitCommand(`cd "${workspaceFolder.uri.fsPath}"`, workspaceFolder);
