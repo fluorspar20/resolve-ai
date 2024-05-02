@@ -1,7 +1,7 @@
 {
   "name": "merge-conflict-resolver",
-  "displayName": "Merge Conflict Resolver",
-  "description": "Merge Conflict Resolver automates the resolution of merge conflicts with minimal user intervention",
+  "displayName": "Resolve.AI",
+  "description": "Resolve.AI automates the resolution of merge conflicts with minimal user intervention",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.87.0"
@@ -18,7 +18,7 @@
       "activitybar": [
         {
           "id": "merge-conflict-resolver-sidebar-view",
-          "title": "Merge Conflict Resolver",
+          "title": "Resolve.AI",
           "icon": "media/merge.svg"
         }
       ]
@@ -28,9 +28,9 @@
         {
           "type": "webview",
           "id": "merge-conflict-resolver-sidebar",
-          "name": "Merge Conflict Resolver",
+          "name": "Resolve.AI",
           "icon": "media/merge.svg",
-          "contextualTitle": "Merge Conflict Resolver"
+          "contextualTitle": "Resolve.AI"
         }
       ]
     }
@@ -70,5 +70,9 @@
     "typescript": "^5.3.3",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.8.0",
+    "simple-git": "^3.24.0"
   }
 }
