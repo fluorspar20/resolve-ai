@@ -6,6 +6,8 @@ A Gemini-powered merge conflict auto-resolution tool which eliminates the tediou
 
 1. Clone the project locally and install all the dependencies using `npm install`
 
-2. Create a .env file in the root folder and the api key value as `API_KEY=<api_key>` inside of it.
+2. Create a .env file in the root folder and the gemini api key obtained from https://aistudio.google.com/app/apikey as `API_KEY=<api_key>` inside of it.
 
 3. Run the extension by pressing F5.
+
+Project demo at - https://youtu.be/G1XF5Hik5CY
